@@ -1,3 +1,9 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 2 optimizations:
+# - [MEDIUM] Add concurrency group to "build.yml"
+# - [LOW] Explicitly set fail-fast for large matrix job "build" (9 combinations)
+# Estimated savings: ~4 min/run
+#
 name: build
 
 on:
@@ -11,6 +17,10 @@ on:
       - synchronize
       - reopened
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     strategy:
